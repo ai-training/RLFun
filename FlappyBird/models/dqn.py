@@ -3,8 +3,10 @@ from torch.nn.modules import Module
 
 
 class DQNModule(Module):
-    def __init__(self, img_w: int, img_h: int, n_frames: int, batch_size):
+    def __init__(self, img_w: int, img_h: int, n_frames: int):
         super().__init__()
+        self.img_w = img_w
+        self.img_h = img_h
         self.conv_network = nn.Sequential(
             nn.Conv2d(n_frames, 64,kernel_size=3),  # input => 80 x 80 x 4
             nn.BatchNorm2d(32),

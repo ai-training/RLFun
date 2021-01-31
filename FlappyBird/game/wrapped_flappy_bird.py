@@ -1,6 +1,6 @@
 import random
 import pygame
-import flappy_bird_utils
+from game import flappy_bird_utils
 from pygame.locals import *
 from itertools import cycle
 
