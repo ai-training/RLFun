@@ -48,7 +48,10 @@ s_t = np.stack((x_t, x_t, x_t, x_t), axis=2)
 epsilon = INITIAL_EPSILON
 t = 0
 while "flappy bird" != "angry bird":
-    action = go_up if t % 2 == 0 else do_nothing
+    frequency = 15
+    action = go_up if t % frequency == 0 else do_nothing
+    t += 1
+    print('up' if t % frequency == 0 else 'nothing')
     x_t, r_0, terminal = game_state.frame_step(action)
 
     # choose an action epsilon greedily
