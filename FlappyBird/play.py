@@ -1,31 +1,28 @@
 from game import wrapped_flappy_bird as game
 from models.dqn import DQNModule
 import numpy as np
+import torch
 import cv2
 import os
 
-
 print(os.getcwd())
 
-
-GAME = 'bird'               # the name of the game being played for log files
-ACTIONS = 2                 # number of valid actions
-GAMMA = 0.99                # decay rate of past observations
-OBSERVE = 100000.           # timesteps to observe before training
-EXPLORE = 2000000.          # frames over which to anneal epsilon
-FINAL_EPSILON = 0.0001      # final value of epsilon
-INITIAL_EPSILON = 0.0001    # starting value of epsilon
-REPLAY_MEMORY = 50000       # number of previous transitions to remember
-BATCH_SIZE = 32                  # size of mini-batch
+GAME = 'bird'  # the name of the game being played for log files
+ACTIONS = 2  # number of valid actions
+GAMMA = 0.99  # decay rate of past observations
+OBSERVE = 100000.  # timesteps to observe before training
+EXPLORE = 2000000.  # frames over which to anneal epsilon
+FINAL_EPSILON = 0.0001  # final value of epsilon
+INITIAL_EPSILON = 0.0001  # starting value of epsilon
+REPLAY_MEMORY = 50000  # number of previous transitions to remember
+BATCH_SIZE = 32  # size of mini-batch
 FRAME_PER_ACTION = 1
 
 IMG_WIDTH = 80
 IMG_HEIGHT = 80
-NBR_FRAMES = 4              # number of frames per pass to DQN
-
+NBR_FRAMES = 4  # number of frames per pass to DQN
 
 DQN = DQNModule(80, 80, 4)
-
 
 # get the first state by doing nothing and preprocess the image to 80x80x4
 game_state = game.GameState()
@@ -38,8 +35,21 @@ go_up[1] = 1
 x_t, r_0, terminal = game_state.frame_step(do_nothing)
 print(type(x_t))
 x_t = cv2.cvtColor(cv2.resize(x_t, (80, 80)), cv2.COLOR_BGR2GRAY)
-ret, x_t = cv2.threshold(x_t,1,255,cv2.THRESH_BINARY)
-s_t = np.stack((x_t, x_t, x_t, x_t), axis=2)
+ret, x_t = cv2.threshold(x_t, 1, 255, cv2.THRESH_BINARY)
+s_t = np.stack((x_t, x_t, x_t, x_t), axis=0)
+
+print(x_t.shape)
+print(s_t.shape)
+
+# todo: normalize images
+s_t_tensor = torch.from_numpy(s_t).unsqueeze(0)
+print(s_t_tensor.size())
+print(s_t_tensor)
+
+action = DQN(s_t_tensor.float())
+print(action)
+
+exit(0)
 
 # saving and loading networks
 # ...
