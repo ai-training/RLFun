@@ -20,7 +20,7 @@ class ReplayBuffer:
         random.seed(seed)
 
     def add(self, state, action, reward, next_state, done):
-        experience = self.experience((state, action, reward, next_state, done))
+        experience = self.experience(state, action, reward, next_state, done)
         self.memory.append(experience)
 
     def get_tensor(self, experiences, extract_fn):

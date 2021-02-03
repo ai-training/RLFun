@@ -33,7 +33,7 @@ actions_list = [do_nothing, go_up]
 
 class Agent:
     def __init__(self, seed: int = 123):
-        self.game_state = None
+        self.game_state = None  # type: flappy_bird.GameState
         random.seed(seed)
 
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -66,7 +66,12 @@ class Agent:
         else:
             self.last_states = self.last_states[1:] + [new_state]
 
-    def act(self, state, eps=0.):
+    def act(self, action_index) -> tuple:
+        action = actions_list[action_index]
+        return self.game_state.frame_step(action)
+
+    def get_action(self, state, eps=0.):
+        self.update_last_steps(state)
         return self.get_random_action() if random.random() < eps else self.get_policy_action(state)
         # new_state, reward, done = self.game_state.frame_step(actions_list[action_index])
 

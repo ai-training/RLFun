@@ -68,3 +68,26 @@ class DQNModule(Module):
 
         return flat_shape
 
+
+# dqn = DQNModule(80, 80, 4)
+# np_arr = np.zeros((4, 80, 80))
+# # tensor = torch.from_numpy(np_arr).unsqueeze(0)
+# tensor = torch.from_numpy(np.array([np_arr, np_arr, np_arr, np_arr, np_arr, np_arr]))
+#
+# pred = dqn(tensor.float())
+#
+# print(pred.gather(0, torch.from_numpy(np.array([0, 1, 0, 1, 0, 1], dtype=np.int64)).unsqueeze(-1)))
+# print(pred.cpu().data.numpy())
+# print(np.argmax(pred.cpu().data.numpy()))
+
+# print(pred.cpu().data.numpy())
+# print(np.argmax(pred.cpu().data.numpy()))
+# print(pred.size())
+#
+# do_nothing = np.zeros(2)
+# do_nothing[0] = 1
+#
+# print(do_nothing, do_nothing.dtype)
+# do_nothing_2 =
+# print(do_nothing_2, do_nothing_2.dtype)
+# print(np.array([0, 1], dtype=np.float))
