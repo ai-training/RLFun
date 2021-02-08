@@ -47,7 +47,7 @@ class DQNModule(Module):
 
     def forward(self, x):
         x = self.conv_network(x)
-        x = x.view(-1, self.flatten_shape(x))
+        x = x.view(x.size(0), -1)
         x = self.linear_network(x)
 
         return x
